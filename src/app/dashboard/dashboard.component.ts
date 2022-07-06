@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-import {MediaMatcher} from '@angular/cdk/layout';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,17 +13,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
 
-  fillerNav = Array.from({length: 2}, (_, i) => `Nav Item ${i + 1}`);
+  dartBadges = Array.from({length: 5}, (_, i) => `assets/images/badges/Dart ${i + 1}.png`);
 
-  fillerContent = Array.from(
-    {length: 2},
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-  );
+  fillerNav = Array.from({length: 2}, (_, i) => `Nav Item ${i + 1}`);
 
   private _mobileQueryListener: () => void;
 
@@ -38,6 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
+
   }
 
   ngOnDestroy(): void {
