@@ -3,6 +3,11 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { Observable } from 'rxjs';
 import { LoginData } from '../interfaces/login-data.interface';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +26,11 @@ export class AuthService {
 
   login(loginData: LoginData) {
     return this.auth.signInWithEmailAndPassword(loginData.email, loginData.password);
+  }
+
+  loginWithGoogle() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    return this.auth.signInWithPopup(provider);
   }
 
   logout() {
