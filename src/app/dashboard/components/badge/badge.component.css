@@ -1,12 +1,20 @@
 img {
-  height: 10%;
-  width: 10%;
+  height: 25%;
+  width: 25%;
 }
 
 .badge-disabled {
-  filter: brightness(25%);
+  filter: brightness(25%) drop-shadow(8px 8px 10px gray);
 }
 
 .badge-enabled {
-  filter: brightness(100%);
+  filter: brightness(100%) drop-shadow(8px 8px 10px gray);
+}
+
+.badge-enabled-pro {
+  filter: brightness(100%) contrast(250%) drop-shadow(8px 8px 10px gray);
+}
+
+.badge-enabled-mega-pro {
+  filter: brightness(100%) contrast(500%) drop-shadow(8px 8px 10px gray);
 }

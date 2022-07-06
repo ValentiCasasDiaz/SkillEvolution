@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-badge',
@@ -11,11 +12,14 @@ export class BadgeComponent implements OnInit {
   canEdit: boolean = true; //TODO: es un Input
 
   badgeEnabled: boolean = false;
+  isProBadge: boolean;
+  isMegaProBadge: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
-
+    this.isProBadge = (this.img.indexOf('4') != -1);
+    this.isMegaProBadge = (this.img.indexOf('5') != -1);
   }
 
   badgeToggler(): void {
