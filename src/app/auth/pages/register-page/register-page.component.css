@@ -41,7 +41,7 @@ p {
 .text-container {
   align-items: center;
   background-color: #5eccd6;
-  border-radius: 10px 0 0 10px;
+  border-radius: 0 10px 10px 0;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@ p {
 .form-container {
   align-items: center;
   background-color: #fff;
-  border-radius: 0 10px 10px 0;
+  border-radius: 10px 0 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;

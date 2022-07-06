@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginData } from 'src/app/interfaces/login-data.interface';
 
 @Component({
   selector: 'app-login-form',
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit {
 
-  @Output() formData: EventEmitter<{email: string; password: string;}> = new EventEmitter();
+  @Output() formData: EventEmitter<LoginData> = new EventEmitter();
 
   form: FormGroup;
 
