@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { BadgeService } from '../services/badge.service';
 
 import { MediaMatcher } from '@angular/cdk/layout';
 
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private badgeService: BadgeService,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher) {
