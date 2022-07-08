@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { LoginData } from '../interfaces/login-data.interface';
+import { User } from '../models/user.model';
+
+import { from, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import firebase from 'firebase/app';
 
@@ -10,6 +14,8 @@ import firebase from 'firebase/app';
 
 export class AuthService {
 
+  user: User;
+
   constructor(private auth: AngularFireAuth) {
   }
 
@@ -18,15 +24,40 @@ export class AuthService {
   }
 
   login(loginData: LoginData) {
-    return this.auth.signInWithEmailAndPassword(loginData.email, loginData.password);
+    return from(this.auth.signInWithEmailAndPassword(loginData.email, loginData.password))
+      .pipe(
+        map((resp: any) => {
+          this.saveUser(resp);
+          return true;
+        }),
+        catchError((err: any) => {
+          console.log(err);
+          return throwError(err);
+        })
+      );
   }
 
   loginWithGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
-    return this.auth.signInWithPopup(provider);
+    return from(this.auth.signInWithPopup(provider))
+      .pipe(
+        map((resp: any) => {
+          this.saveUser(resp);
+          return true;
+        }),
+        catchError((err: any) => {
+          console.log(err);
+          return throwError(err);
+        })
+      );
   }
 
   logout() {
+    this.user = null;
     return this.auth.signOut();
+  }
+
+  saveUser(resp) {
+    this.user = new User(resp.user.displayName, resp.user.email, resp.user.photoURL, resp.user.uid);
   }
 }
