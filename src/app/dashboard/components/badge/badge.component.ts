@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { Badge } from 'src/app/models/badge.model';
 
 @Component({
   selector: 'app-badge',
@@ -8,23 +9,25 @@ import { NgClass } from '@angular/common';
 })
 export class BadgeComponent implements OnInit {
 
-  @Input() img: string;
-  canEdit: boolean = true; //TODO: es un Input
+  @Input() badge: Badge;
+  @Input() canEdit: boolean = true;
+  @Output() onBadgeUpdate = new EventEmitter<Badge>();
 
-  badgeEnabled: boolean = false;
   isProBadge: boolean;
   isMegaProBadge: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.isProBadge = (this.img.indexOf('4') != -1);
-    this.isMegaProBadge = (this.img.indexOf('5') != -1);
+    this.isProBadge = (this.badge.img.indexOf('4') != -1);
+    this.isMegaProBadge = (this.badge.img.indexOf('5') != -1);
   }
 
   badgeToggler(): void {
-    if (this.canEdit)
-      this.badgeEnabled = !this.badgeEnabled;
+    if (this.canEdit) {
+      this.badge.owned = !this.badge.owned;
+      this.onBadgeUpdate.emit(this.badge);
+    }
   }
 
 }

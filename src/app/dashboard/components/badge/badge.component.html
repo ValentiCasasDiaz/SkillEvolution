@@ -1,7 +1,7 @@
 <img class="badge-disabled"
-     [src]="img"
+     [src]="badge.img"
      (click)="badgeToggler()"
-     [ngClass]="{ 'badge-enabled-mega-pro': badgeEnabled === true && isMegaProBadge === true,
-                  'badge-enabled-pro': badgeEnabled === true && isProBadge === true,
-                  'badge-enabled': badgeEnabled === true,
-                  'badge-disabled': badgeEnabled === false }">
+     [ngClass]="{ 'badge-enabled-mega-pro': this.badge.owned === true && isMegaProBadge === true,
+                  'badge-enabled-pro': this.badge.owned === true && isProBadge === true,
+                  'badge-enabled': this.badge.owned === true,
+                  'badge-disabled': this.badge.owned === false }">
