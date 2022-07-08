@@ -18,23 +18,23 @@ export class LoginPageComponent implements OnInit {
     ngOnInit(): void {}
 
     login(loginData: LoginData) {
-      this.authService
-        .login(loginData)
-        .then((value) => {
-          console.log(value);
+      this.authService.login(loginData).subscribe(
+        (next) => {
           this.router.navigate(['/dashboard']);
-        })
-        .catch((e) => console.log(e.message));
+        },
+        (error) => {
+          console.log(error);
+        });
     }
 
     loginWithGoogle() {
-      this.authService
-        .loginWithGoogle()
-        .then((value) => {
-          console.log(value);
+      this.authService.loginWithGoogle().subscribe(
+        (next) => {
           this.router.navigate(['/dashboard']);
-        })
-        .catch((e) => console.log(e.message));
+        },
+        (error) => {
+          console.log(error);
+        });
     }
 
 }
