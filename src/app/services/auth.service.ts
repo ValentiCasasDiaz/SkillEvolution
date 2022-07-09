@@ -72,6 +72,6 @@ export class AuthService {
       this.user = JSON.parse(localStorage.getItem(STORAGE_USER));
     }
 
-    return this.user._id;
+    return this.user.id;
   }
 }

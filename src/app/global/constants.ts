@@ -1,5 +1,9 @@
-// Local Storage Keys
+// LOCAL STORAGE KEYS
 export const STORAGE_USER: string = 'user';
+
+// ROLE TYPES
+export const ROLE_ADMIN: string = 'admin';
+export const ROLE_USER: string = 'user';
 
 // Type of Collections in Firebase
 export const COLLECTION_BADGES: string = 'badges';
