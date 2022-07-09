@@ -5,6 +5,7 @@ import { BadgeService } from '../services/badge.service';
 
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Badge } from '../models/badge.model';
+import { BADGES_HARD_SKILLS } from '../global/constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,19 +38,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     // Consultamos y dejamos que se actualizen las insignias recien creadas
-    this.badgeService.getBadges(this.authService.user._id).subscribe(
+    this.badgeService.getBadges(this.authService.getUserID()).subscribe(
       (badgesSnapshot) => {
         let data: any = badgesSnapshot.payload.data();
 
         if (data) {
           this.hardSkillBadges = [];
 
-          data['hardSkills'].forEach(element => {
+          data[BADGES_HARD_SKILLS].forEach(element => {
             this.hardSkillBadges.push(new Badge(element.id, element.img, element.owned));
           });
         }
         else {
-          this.badgeService.initializeHardSkillBadges(this.authService.user._id);
+          this.badgeService.initializeHardSkillBadges(this.authService.getUserID());
         }
       }
     );
@@ -67,8 +68,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updateBadge(value: Badge) {
-    console.log(value);
+    const foundIndex = this.hardSkillBadges.findIndex(x => x.id == value.id);
+    this.hardSkillBadges[foundIndex] = value;
 
+    const skills = this.badgeService.convertArrayToJSArray(BADGES_HARD_SKILLS, this.hardSkillBadges);
+    this.badgeService.createUpdateBadges(this.authService.getUserID(), skills);
   }
 
 }

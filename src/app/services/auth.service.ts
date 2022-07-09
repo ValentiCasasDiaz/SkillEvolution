@@ -14,7 +14,7 @@ import firebase from 'firebase/app';
 
 export class AuthService {
 
-  user: User;
+  private user: User;
 
   constructor(private auth: AngularFireAuth) {
   }
@@ -59,5 +59,9 @@ export class AuthService {
 
   saveUser(resp) {
     this.user = new User(resp.user.displayName, resp.user.email, resp.user.photoURL, resp.user.uid);
+  }
+
+  getUserID(): string {
+    return this.user._id;
   }
 }
