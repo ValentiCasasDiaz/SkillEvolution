@@ -3,8 +3,11 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { LoginData } from '../interfaces/login-data.interface';
 import { User } from '../models/user.model';
 
+import { STORAGE_USER } from '../global/constants';
+
 import { from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+
 
 import firebase from 'firebase/app';
 
@@ -14,7 +17,7 @@ import firebase from 'firebase/app';
 
 export class AuthService {
 
-  private user: User;
+  private user: User = null;
 
   constructor(private auth: AngularFireAuth) {
   }
@@ -54,14 +57,21 @@ export class AuthService {
 
   logout() {
     this.user = null;
+    localStorage.removeItem(STORAGE_USER);
     return this.auth.signOut();
   }
 
   saveUser(resp) {
     this.user = new User(resp.user.displayName, resp.user.email, resp.user.photoURL, resp.user.uid);
+    localStorage.setItem(STORAGE_USER, JSON.stringify(this.user));
   }
 
   getUserID(): string {
+
+    if (!this.user) {
+      this.user = JSON.parse(localStorage.getItem(STORAGE_USER));
+    }
+
     return this.user._id;
   }
 }
