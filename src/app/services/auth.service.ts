@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFirestore } from '@angular/fire/firestore';
 import { LoginData } from '../interfaces/login-data.interface';
 import { User } from '../models/user.model';
 
@@ -19,11 +20,24 @@ export class AuthService {
 
   private user: User = null;
 
-  constructor(private auth: AngularFireAuth) {
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore
+  ) {
   }
 
   register(loginData: LoginData) {
-    return this.auth.createUserWithEmailAndPassword(loginData.email, loginData.password);
+    return from(this.auth.createUserWithEmailAndPassword(loginData.email, loginData.password))
+      .pipe(
+        map((resp: any) => {
+          this.saveUser(resp);
+          return true;
+        }),
+        catchError((err: any) => {
+          console.log(err);
+          return throwError(err);
+        })
+      );;
   }
 
   login(loginData: LoginData) {
@@ -62,7 +76,7 @@ export class AuthService {
   }
 
   saveUser(resp) {
-    this.user = new User(resp.user.displayName, resp.user.email, resp.user.photoURL, resp.user.uid);
+    this.user = new User(resp.user.uid, resp.user.displayName, resp.user.email, resp.user.photoURL);
     localStorage.setItem(STORAGE_USER, JSON.stringify(this.user));
   }
 

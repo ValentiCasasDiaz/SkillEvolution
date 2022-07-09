@@ -1,5 +1,7 @@
-import { ROLE_USER } from "../global/constants";
-
+enum Role {
+  ROLE_USER,
+  ROLE_ADMIN
+}
 
 export class User {
 
@@ -7,7 +9,7 @@ export class User {
     public id: string,
     public displayName: string,
     public email: string,
-    public role: string = ROLE_USER,
     public photoURL: string = null,
+    public role: Role = Role.ROLE_USER
   ) { }
 }
