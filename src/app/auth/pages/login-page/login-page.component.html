@@ -1,20 +1,21 @@
 <div class="background">
   <div class="login-container">
-    <div class="text-container">
+    <!-- <div class="text-container">
       <h1>Hey Stranger</h1>
       <p>
         Want to create an awesome account to access this awesome app? Go ahead
         and click the button below!
       </p>
       <button mat-button routerLink="/register">Sign up</button>
-    </div>
+    </div> -->
     <div class="form-container">
-      <h1>Welcome to Valen Login</h1>
-      <button class="mat-raised-button" (click)="loginWithGoogle()">
-        Sign In with Google
+      <h1>Bienvenidos a Skill Evolution</h1>
+      <button mat-raised-button color="primary" (click)="loginWithGoogle()">
+        <mat-icon svgIcon="google"  aria-hidden="false"></mat-icon>
+        <span>   Iniciar Sesión</span>
       </button>
-      <h5>Or sign in with your email</h5>
-      <app-login-form (formData)="login($event)"></app-login-form>
+      <!-- <h5>Or sign in with your email</h5>
+      <app-login-form (formData)="login($event)"></app-login-form> -->
     </div>
   </div>
 </div>

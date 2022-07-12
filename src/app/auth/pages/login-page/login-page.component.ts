@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginData } from 'src/app/interfaces/login-data.interface';
 
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +16,15 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router) { }
+    private readonly router: Router,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer)
+    {
+      this.matIconRegistry.addSvgIcon(
+        "google",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/logos/google.svg")
+      );
+    }
 
     ngOnInit(): void {}
 

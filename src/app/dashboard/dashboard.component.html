@@ -28,7 +28,7 @@
       <h2>Árbol de habilidades</h2>
       <mat-grid-list cols="5" rowHeight="256px">
         <mat-grid-tile *ngFor="let badge of hardSkillBadges">
-          <app-badge [badge]="badge" [canEdit]="true"
+          <app-badge [badge]="badge" [canEdit]="this.auth.canEdit(this.user)"
                      (onBadgeUpdate)="updateBadge($event)"></app-badge>
         </mat-grid-tile>
       </mat-grid-list>

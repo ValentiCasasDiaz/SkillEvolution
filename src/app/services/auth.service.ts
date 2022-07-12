@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { LoginData } from '../interfaces/login-data.interface';
 import { Role, User } from '../models/user.model';
 
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable, throwError, of } from 'rxjs';
 import { switchMap, catchError, map } from 'rxjs/operators';
 
 
@@ -28,7 +28,7 @@ export class AuthService {
           if (user) {
             return this.db.doc<User>(`users/${user.uid}`).valueChanges();
           } else {
-            return null;
+            return of(null);
           }
         }
       )
@@ -70,8 +70,6 @@ export class AuthService {
   private oAuthLogin(provider) {
     return this.auth.signInWithPopup(provider)
       .then((credential) => {
-        console.log(`oAuthLogin: ${credential}`);
-
         this.updateUserData(credential.user);
       });
   }
@@ -93,18 +91,21 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
-  private checkAuthorization(user: User, roles: Role[]) {
+  private checkAuthorization(user: User, roles: Role[]): boolean {
+    let isAuthorized: boolean = false;
+
     if (!user) {
-      return false;
+      isAuthorized = false;
     }
 
     roles.forEach(role => {
+
       if (user.role == role) {
-        return true;
+        isAuthorized = true;
       }
     });
 
-    return false;
+    return isAuthorized;
   }
 
   canEdit(user: User): boolean {

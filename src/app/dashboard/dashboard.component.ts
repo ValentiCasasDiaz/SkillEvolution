@@ -44,8 +44,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // Pedimo el usuario al servicio de autentificación
     this.userSub = this.auth.user.subscribe(
       (user) => {
-        console.log(`ngOnInit, dashboard: ${user}`);
-
         this.user = user;
 
         // Consultamos y dejamos que se actualizen las insignias recien creadas
@@ -72,11 +70,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-    this.userSub.unsubscribe();
-    this.badgeSub.unsubscribe();
   }
 
   logout() {
+    this.badgeSub.unsubscribe();
+    this.userSub.unsubscribe();
+
     this.auth
       .logout()
       .then(() => this.router.navigate(['/']))
