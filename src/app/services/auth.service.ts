@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { LoginData } from '../interfaces/login-data.interface';
-import { User } from '../models/user.model';
+import { Role, User } from '../models/user.model';
 
-import { STORAGE_USER } from '../global/constants';
-
-import { from, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
+import { switchMap, catchError, map } from 'rxjs/operators';
 
 
 import firebase from 'firebase/app';
@@ -18,19 +16,30 @@ import firebase from 'firebase/app';
 
 export class AuthService {
 
-  private user: User = null;
+  user: Observable<User> = null;
 
   constructor(
     private auth: AngularFireAuth,
-    private db: AngularFirestore
+    private db: AngularFirestore,
   ) {
+
+    this.user = this.auth.authState.pipe(
+      switchMap(user => {
+          if (user) {
+            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return null;
+          }
+        }
+      )
+    );
+
   }
 
   register(loginData: LoginData) {
     return from(this.auth.createUserWithEmailAndPassword(loginData.email, loginData.password))
       .pipe(
         map((resp: any) => {
-          this.saveUser(resp);
           return true;
         }),
         catchError((err: any) => {
@@ -44,7 +53,6 @@ export class AuthService {
     return from(this.auth.signInWithEmailAndPassword(loginData.email, loginData.password))
       .pipe(
         map((resp: any) => {
-          this.saveUser(resp);
           return true;
         }),
         catchError((err: any) => {
@@ -56,36 +64,52 @@ export class AuthService {
 
   loginWithGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
-    return from(this.auth.signInWithPopup(provider))
-      .pipe(
-        map((resp: any) => {
-          this.saveUser(resp);
-          return true;
-        }),
-        catchError((err: any) => {
-          console.log(err);
-          return throwError(err);
-        })
-      );
+    return this.oAuthLogin(provider);
+  }
+
+  private oAuthLogin(provider) {
+    return this.auth.signInWithPopup(provider)
+      .then((credential) => {
+        console.log(`oAuthLogin: ${credential}`);
+
+        this.updateUserData(credential.user);
+      });
   }
 
   logout() {
-    this.user = null;
-    localStorage.removeItem(STORAGE_USER);
     return this.auth.signOut();
   }
 
-  saveUser(resp) {
-    this.user = new User(resp.user.uid, resp.user.displayName, resp.user.email, resp.user.photoURL);
-    localStorage.setItem(STORAGE_USER, JSON.stringify(this.user));
+  private updateUserData(user) {
+    const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
+    const data: User = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      role: Role.ROLE_USER
+    };
+
+    return userRef.set(data, { merge: true });
   }
 
-  getUserID(): string {
-
-    if (!this.user) {
-      this.user = JSON.parse(localStorage.getItem(STORAGE_USER));
+  private checkAuthorization(user: User, roles: Role[]) {
+    if (!user) {
+      return false;
     }
 
-    return this.user.id;
+    roles.forEach(role => {
+      if (user.role == role) {
+        return true;
+      }
+    });
+
+    return false;
   }
+
+  canEdit(user: User): boolean {
+    const allowed = [Role.ROLE_ADMIN, Role.ROLE_TEACHER];
+    return this.checkAuthorization(user, allowed);
+  }
+
 }

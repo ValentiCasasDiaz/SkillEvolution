@@ -1,15 +1,13 @@
-enum Role {
+export enum Role {
   ROLE_USER,
+  ROLE_TEACHER,
   ROLE_ADMIN
 }
 
-export class User {
-
-  constructor(
-    public id: string,
-    public displayName: string,
-    public email: string,
-    public photoURL: string = null,
-    public role: Role = Role.ROLE_USER
-  ) { }
+export interface User {
+    uid: string;
+    displayName: string;
+    email: string;
+    photoURL?: string;
+    role?: Role.ROLE_USER;
 }

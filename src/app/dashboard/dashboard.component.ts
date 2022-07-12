@@ -6,6 +6,8 @@ import { BadgeService } from '../services/badge.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Badge } from '../models/badge.model';
 import { BADGES_HARD_SKILLS } from '../global/constants';
+import { User } from '../models/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,17 +17,19 @@ import { BADGES_HARD_SKILLS } from '../global/constants';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
-
-  hardSkillBadges: Badge[] = [];
-
-
-
   fillerNav = Array.from({ length: 2 }, (_, i) => `Nav Item ${i + 1}`);
-
   private _mobileQueryListener: () => void;
 
+
+  hardSkillBadges: Badge[] = [];
+  user: User;
+
+  userSub: Subscription;
+  badgeSub: Subscription;
+
+
   constructor(
-    private authService: AuthService,
+    private auth: AuthService,
     private badgeService: BadgeService,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
@@ -37,31 +41,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // Consultamos y dejamos que se actualizen las insignias recien creadas
-    this.badgeService.getBadges(this.authService.getUserID()).subscribe(
-      (badgesSnapshot) => {
-        let data: any = badgesSnapshot.payload.data();
+    // Pedimo el usuario al servicio de autentificación
+    this.userSub = this.auth.user.subscribe(
+      (user) => {
+        console.log(`ngOnInit, dashboard: ${user}`);
 
-        if (data) {
-          this.hardSkillBadges = [];
+        this.user = user;
 
-          data[BADGES_HARD_SKILLS].forEach(element => {
-            this.hardSkillBadges.push(new Badge(element.id, element.img, element.owned));
-          });
-        }
-        else {
-          this.badgeService.initializeHardSkillBadges(this.authService.getUserID());
-        }
+        // Consultamos y dejamos que se actualizen las insignias recien creadas
+        this.badgeSub = this.badgeService.getBadges(this.user.uid).subscribe(
+          (badgesSnapshot) => {
+            let data: any = badgesSnapshot.payload.data();
+
+            if (data) {
+              this.hardSkillBadges = [];
+
+              data[BADGES_HARD_SKILLS].forEach(element => {
+                this.hardSkillBadges.push(new Badge(element.id, element.img, element.owned));
+              });
+            }
+            else {
+              this.badgeService.initializeHardSkillBadges(this.user.uid);
+            }
+          }
+        );
       }
     );
+
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.userSub.unsubscribe();
+    this.badgeSub.unsubscribe();
   }
 
   logout() {
-    this.authService
+    this.auth
       .logout()
       .then(() => this.router.navigate(['/']))
       .catch((e) => console.log(e.message));
@@ -72,7 +88,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.hardSkillBadges[foundIndex] = value;
 
     const skills = this.badgeService.convertArrayToJSArray(BADGES_HARD_SKILLS, this.hardSkillBadges);
-    this.badgeService.createUpdateBadges(this.authService.getUserID(), skills);
+    this.badgeService.createUpdateBadges(this.user.uid, skills);
   }
 
 }
