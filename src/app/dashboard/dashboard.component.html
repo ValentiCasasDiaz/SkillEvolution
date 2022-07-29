@@ -1,21 +1,24 @@
-<mat-toolbar><a (click)="logout()">Log out</a></mat-toolbar>
-<div class="background">
-  <h1>Bienvenidos al Dashboard</h1>
-  <h2>Hecho por Valen</h2>
+<mat-toolbar>
+  <span style="padding-right: 5em;">Hola {{(user) ? user.displayName : ''}},</span>
+  <a (click)="logout()">Log out</a>
+</mat-toolbar>
 
-  <h2>Árbol de habilidades</h2>
-  <mat-grid-list cols="5" rowHeight="256px">
-    <mat-grid-tile *ngFor="let badge of hardSkillBadges">
-      <app-badge [badge]="badge" [canEdit]="this.auth.canEdit(this.user)" (onBadgeUpdate)="updateBadge($event)">
-      </app-badge>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <!--
-      <div class="badge-container">
-        <app-badge *ngFor="let badge of hardSkillBadges"
-                   [badge]="badge" [canEdit]="true"
-                   (onBadgeUpdate)="updateBadge($event)"></app-badge>
-      </div>
-    -->
+<div class="background">
+
+  <mat-form-field *ngIf="canEdit()" appearance="fill">
+    <mat-label>Usuario:</mat-label>
+    <mat-select [(value)]="selectedUser">
+      <mat-option></mat-option>
+      <mat-option [value]="option.value" *ngFor="let option of users">{{ option.displayName }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h1 *ngIf="(canEdit() && selectedUser) || (!canEdit() && this.user)">Árbol de habilidades</h1>
+
+  <div class="badge-container">
+    <app-badge class="badge" *ngFor="let badge of hardSkillBadges" [badge]="badge" [canEdit]="this.auth.canEdit(this.user)"
+      (onBadgeUpdate)="updateBadge($event)">
+    </app-badge>
+  </div>
 
 </div>

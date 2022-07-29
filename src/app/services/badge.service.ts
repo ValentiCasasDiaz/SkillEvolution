@@ -11,17 +11,17 @@ import * as CONSTS from '../global/constants';
 export class BadgeService {
 
   constructor(
-    private firestore: AngularFirestore
+    private db: AngularFirestore
   ) { }
 
   // Crea o sobrescribe todas las insignias del usuario
   createUpdateBadges(userId: string, badges: any) {
-    this.firestore.collection(CONSTS.COLLECTION_BADGES).doc(userId).set(badges);
+    this.db.collection(CONSTS.COLLECTION_BADGES).doc(userId).set(badges);
   }
 
   // Devuelve las insignias del usuario y cualquier cambio que en ellas que pase
   getBadges(userId: string) {
-    return this.firestore.collection(CONSTS.COLLECTION_BADGES).doc(userId).snapshotChanges();
+    return this.db.collection(CONSTS.COLLECTION_BADGES).doc(userId).snapshotChanges();
   }
 
   // Función para inicializar todas las insignias disponibles para el usuario nuevo

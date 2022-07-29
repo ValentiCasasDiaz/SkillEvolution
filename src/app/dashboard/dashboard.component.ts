@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { BadgeService } from '../services/badge.service';
 
-import { MediaMatcher } from '@angular/cdk/layout';
 import { Badge } from '../models/badge.model';
 import { BADGES_HARD_SKILLS } from '../global/constants';
 import { User } from '../models/user.model';
@@ -14,65 +13,74 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-
-  mobileQuery: MediaQueryList;
-  fillerNav = Array.from({ length: 2 }, (_, i) => `Nav Item ${i + 1}`);
-  private _mobileQueryListener: () => void;
-
+export class DashboardComponent implements OnInit {
 
   hardSkillBadges: Badge[] = [];
   user: User;
 
+  // User Selector Fields
+  selectedUser: User = null;
+  users: User[] = [];
+
   userSub: Subscription;
   badgeSub: Subscription;
-
+  allUsersSub: Subscription;
 
   constructor(
     private auth: AuthService,
     private badgeService: BadgeService,
-    private router: Router,
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-  }
+    private router: Router) {}
 
   ngOnInit(): void {
-
-    // Pedimo el usuario al servicio de autentificación
+    // Pedimos el usuario al servicio de autentificación
     this.userSub = this.auth.user.subscribe(
       (user) => {
         this.user = user;
 
-        // Consultamos y dejamos que se actualizen las insignias recien creadas
-        this.badgeSub = this.badgeService.getBadges(this.user.uid).subscribe(
-          (badgesSnapshot) => {
-            let data: any = badgesSnapshot.payload.data();
+        if (this.auth.canEdit(this.user)) {
+          this.allUsersSub = this.auth.getUsers().subscribe(
+            (usersSnapshot) => {
+              let data: any = usersSnapshot;
 
-            if (data) {
-              this.hardSkillBadges = [];
+              if (data) {
+                this.users = [];
 
-              data[BADGES_HARD_SKILLS].forEach(element => {
-                this.hardSkillBadges.push(new Badge(element.id, element.img, element.owned));
-              });
+                data.forEach(element => {
+                  this.users.push(element.payload.doc.data());
+                });
+              }
             }
-            else {
-              this.badgeService.initializeHardSkillBadges(this.user.uid);
-            }
-          }
-        );
+          );
+        }
+        // else {
+          // Si no puede editar es un alumno, así que le mostramos sus insignias
+          this.getUserBadges(this.user);
+        // }
       }
     );
-
   }
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+  getUserBadges(user: User): void {
+    // Consultamos y dejamos que se actualizen las insignias recien creadas
+    this.badgeSub = this.badgeService.getBadges(user.uid).subscribe(
+      (badgesSnapshot) => {
+        let data: any = badgesSnapshot.payload.data();
+
+        if (data) {
+          this.hardSkillBadges = [];
+
+          data[BADGES_HARD_SKILLS].forEach(element => {
+            this.hardSkillBadges.push(new Badge(element.id, element.img, element.owned));
+          });
+        }
+        else {
+          this.badgeService.initializeHardSkillBadges(user.uid);
+        }
+      }
+    );
   }
 
-  logout() {
+  logout(): void {
     this.badgeSub.unsubscribe();
     this.userSub.unsubscribe();
 
@@ -82,12 +90,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .catch((e) => console.log(e.message));
   }
 
-  updateBadge(value: Badge) {
+  updateBadge(value: Badge): void {
     const foundIndex = this.hardSkillBadges.findIndex(x => x.id == value.id);
     this.hardSkillBadges[foundIndex] = value;
 
     const skills = this.badgeService.convertArrayToJSArray(BADGES_HARD_SKILLS, this.hardSkillBadges);
     this.badgeService.createUpdateBadges(this.user.uid, skills);
+  }
+
+  canEdit(): boolean {
+    if (this.user) {
+      return this.auth.canEdit(this.user);
+    }
+    else {
+      return false;
+    }
+  }
+
+  onUserChange(value) {
+    console.log(value);
+
   }
 
 }

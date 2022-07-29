@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
 
 import { BadgeComponent } from './components/badge/badge.component';
 
@@ -16,12 +14,10 @@ import { BadgeComponent } from './components/badge/badge.component';
   declarations: [DashboardComponent, BadgeComponent],
   imports: [
     CommonModule,
+    FormsModule,
     DashboardRoutingModule,
     MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatGridListModule
+    MatSelectModule
   ]
 })
 export class DashboardModule { }

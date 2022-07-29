@@ -25,10 +25,11 @@ mat-toolbar {
   align-items: center;
   background-image: url("/assets/mountains.png");
   box-sizing: border-box;
+  box-align: baseline;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 64px);
-  padding-top: 10%;
+  padding-top: 1%;
 }
 
 .btn {
@@ -50,7 +51,15 @@ a:hover {
 }
 
 .badge-container {
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
 }
+
+.badge {
+  width: 20%;
+  height: auto;
+}
+

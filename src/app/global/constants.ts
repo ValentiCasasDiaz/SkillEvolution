@@ -1,5 +1,5 @@
 // LOCAL STORAGE KEYS
-export const STORAGE_USER: string = 'user';
+export const STORAGE_USERS: string = 'users';
 
 // Type of Collections in Firebase
 export const COLLECTION_BADGES: string = 'badges';

@@ -7,6 +7,7 @@ import { Role, User } from '../models/user.model';
 import { from, Observable, throwError, of } from 'rxjs';
 import { switchMap, catchError, map } from 'rxjs/operators';
 
+import * as CONSTS from '../global/constants';
 
 import firebase from 'firebase/app';
 
@@ -111,6 +112,11 @@ export class AuthService {
   canEdit(user: User): boolean {
     const allowed = [Role.ROLE_ADMIN, Role.ROLE_TEACHER];
     return this.checkAuthorization(user, allowed);
+  }
+
+  // Devuelve los usuarios y cualquier cambio que en ellas que pase
+  getUsers() {
+    return this.db.collection(CONSTS.STORAGE_USERS).snapshotChanges();
   }
 
 }
