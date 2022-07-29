@@ -1,45 +1,21 @@
-<!--
 <mat-toolbar><a (click)="logout()">Log out</a></mat-toolbar>
 <div class="background">
   <h1>Bienvenidos al Dashboard</h1>
   <h2>Hecho por Valen</h2>
-</div>
--->
 
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <h1 class="example-app-name">Responsive App</h1>
-    <a (click)="logout()">Log out</a>
-  </mat-toolbar>
-
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56">
-      <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <h2>Árbol de habilidades</h2>
-      <mat-grid-list cols="5" rowHeight="256px">
-        <mat-grid-tile *ngFor="let badge of hardSkillBadges">
-          <app-badge [badge]="badge" [canEdit]="this.auth.canEdit(this.user)"
-                     (onBadgeUpdate)="updateBadge($event)"></app-badge>
-        </mat-grid-tile>
-      </mat-grid-list>
-<!--
+  <h2>Árbol de habilidades</h2>
+  <mat-grid-list cols="5" rowHeight="256px">
+    <mat-grid-tile *ngFor="let badge of hardSkillBadges">
+      <app-badge [badge]="badge" [canEdit]="this.auth.canEdit(this.user)" (onBadgeUpdate)="updateBadge($event)">
+      </app-badge>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <!--
       <div class="badge-container">
         <app-badge *ngFor="let badge of hardSkillBadges"
                    [badge]="badge" [canEdit]="true"
                    (onBadgeUpdate)="updateBadge($event)"></app-badge>
       </div>
     -->
-    </mat-sidenav-content>
 
-  </mat-sidenav-container>
 </div>
