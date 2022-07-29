@@ -26,12 +26,12 @@ export class AuthService {
 
     this.user = this.auth.authState.pipe(
       switchMap(user => {
-          if (user) {
-            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
-          } else {
-            return of(null);
-          }
+        if (user) {
+          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
         }
+      }
       )
     );
 
@@ -80,22 +80,25 @@ export class AuthService {
   }
 
   private updateUserData(user) {
-    console.log(user);
-    console.log(user.role);
-
 
     const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
-    console.log(userRef);
 
-    const data: User = {
-      uid: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL,
-      role: Role.ROLE_USER
-    };
+    userRef.get().subscribe(
+      (value) => {
 
-    return userRef.set(data, { merge: true });
+        let infoUser = value.data();
+
+        const data: User = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          role: (infoUser) ? infoUser.role : Role.ROLE_USER
+        };
+
+        userRef.set(data, { merge: true });
+      }
+    );
   }
 
   private checkAuthorization(user: User, roles: Role[]): boolean {
@@ -104,13 +107,14 @@ export class AuthService {
     if (!user) {
       isAuthorized = false;
     }
+    else {
+      roles.forEach(role => {
 
-    roles.forEach(role => {
-
-      if (user.role == role) {
-        isAuthorized = true;
-      }
-    });
+        if (user.role == role) {
+          isAuthorized = true;
+        }
+      });
+    }
 
     return isAuthorized;
   }

@@ -35,7 +35,12 @@ export class DashboardComponent implements OnInit {
     // Pedimos el usuario al servicio de autentificación
     this.userSub = this.auth.user.subscribe(
       (user) => {
+        if (!user)
+          return;
+
         this.user = user;
+
+        console.log(user);
 
         if (this.auth.canEdit(this.user)) {
           this.allUsersSub = this.auth.getUsers().subscribe(

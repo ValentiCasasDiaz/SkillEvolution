@@ -9,6 +9,11 @@ h2 {
   margin-bottom: 50px;
 }
 
+.welcome-user {
+  color: #5eccd6;
+  padding-right: 2rem;
+}
+
 a {
   color: #5eccd6;
   border-bottom: 2px solid transparent;
