@@ -40,8 +40,6 @@ export class DashboardComponent implements OnInit {
 
         this.user = user;
 
-        console.log(user);
-
         if (this.auth.canEdit(this.user)) {
           this.allUsersSub = this.auth.getUsers().subscribe(
             (usersSnapshot) => {
