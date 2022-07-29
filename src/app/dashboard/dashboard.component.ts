@@ -22,9 +22,9 @@ export class DashboardComponent implements OnInit {
   selectedUser: User = null;
   users: User[] = [];
 
-  userSub: Subscription;
-  badgeSub: Subscription;
-  allUsersSub: Subscription;
+  userSub: Subscription = null;
+  badgeSub: Subscription = null;
+  allUsersSub: Subscription = null;
 
   constructor(
     private auth: AuthService,
@@ -52,10 +52,10 @@ export class DashboardComponent implements OnInit {
             }
           );
         }
-        // else {
+        else {
           // Si no puede editar es un alumno, así que le mostramos sus insignias
           this.getUserBadges(this.user);
-        // }
+        }
       }
     );
   }
@@ -81,7 +81,14 @@ export class DashboardComponent implements OnInit {
   }
 
   logout(): void {
-    this.badgeSub.unsubscribe();
+    if (this.allUsersSub) {
+      this.allUsersSub.unsubscribe();
+    }
+
+    if (this.badgeSub) {
+      this.badgeSub.unsubscribe();
+    }
+
     this.userSub.unsubscribe();
 
     this.auth
@@ -107,9 +114,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onUserChange(value) {
-    console.log(value);
+  onUserChange(user: User) {
+    if (this.badgeSub) {
+      this.badgeSub.unsubscribe();
+    }
 
+    this.getUserBadges(user);
   }
 
 }

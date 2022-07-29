@@ -80,7 +80,13 @@ export class AuthService {
   }
 
   private updateUserData(user) {
+    console.log(user);
+    console.log(user.role);
+
+
     const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
+    console.log(userRef);
+
     const data: User = {
       uid: user.uid,
       displayName: user.displayName,
