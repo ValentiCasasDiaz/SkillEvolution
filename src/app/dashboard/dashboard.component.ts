@@ -105,7 +105,10 @@ export class DashboardComponent implements OnInit {
     this.hardSkillBadges[foundIndex] = value;
 
     const skills = this.badgeService.convertArrayToJSArray(BADGES_HARD_SKILLS, this.hardSkillBadges);
-    this.badgeService.createUpdateBadges(this.user.uid, skills);
+
+    if (this.canEdit() && this.selectedUser){
+      this.badgeService.createUpdateBadges(this.selectedUser.uid, skills);
+    }
   }
 
   canEdit(): boolean {
