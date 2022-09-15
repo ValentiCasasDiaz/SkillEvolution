@@ -1,23 +1,38 @@
-<mat-toolbar>
-  <span class="welcome-user">Hola {{(user) ? user.displayName : ''}},</span>
-  <a (click)="logout()">Log out</a>
+<mat-toolbar color="primary">
+    <span class="welcome-user">Hola {{ user ? user.displayName : "" }}</span>
+
+    <img mat-button [matMenuTriggerFor]="beforeMenu" class="user_photo" [src]="getUserPhoto()" alt="Photo" />
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="logout()">Log out</button>
+    </mat-menu>
+
 </mat-toolbar>
 
 <div class="background">
-
   <mat-form-field *ngIf="canEdit()" appearance="fill">
     <mat-label>Usuario:</mat-label>
-    <mat-select [(value)]="selectedUser" (selectionChange)="onUserChange($event.value)">
-      <mat-option [value]="option" *ngFor="let option of users">{{ option.displayName }}</mat-option>
+    <mat-select
+      [(value)]="selectedUser"
+      (selectionChange)="onUserChange($event.value)"
+    >
+      <mat-option [value]="option" *ngFor="let option of users">{{
+        option.displayName
+      }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <h1 *ngIf="(canEdit() && selectedUser) || (!canEdit() && this.user)">Árbol de habilidades</h1>
+  <h1 *ngIf="(canEdit() && selectedUser) || (!canEdit() && this.user)">
+    Árbol de habilidades
+  </h1>
 
   <div class="badge-container">
-    <app-badge class="badge" *ngFor="let badge of hardSkillBadges" [badge]="badge" [canEdit]="this.auth.canEdit(this.user)"
-      (onBadgeUpdate)="updateBadge($event)">
+    <app-badge
+      class="badge"
+      *ngFor="let badge of hardSkillBadges"
+      [badge]="badge"
+      [canEdit]="this.auth.canEdit(this.user)"
+      (onBadgeUpdate)="updateBadge($event)"
+    >
     </app-badge>
   </div>
-
 </div>

@@ -67,3 +67,9 @@ a:hover {
   height: auto;
 }
 
+.user_photo {
+  cursor: pointer;
+  max-width: 2.5em;
+  border-radius: 50%;
+}
+

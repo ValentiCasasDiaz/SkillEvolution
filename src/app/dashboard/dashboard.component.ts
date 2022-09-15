@@ -83,6 +83,15 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getUserPhoto(): string {
+    if (this.user && this.user.photoURL) {
+      return this.user.photoURL;
+    }
+    else {
+      return "";
+    }
+  }
+
   logout(): void {
     if (this.allUsersSub) {
       this.allUsersSub.unsubscribe();

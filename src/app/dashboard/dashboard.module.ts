@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { BadgeComponent } from './components/badge/badge.component';
 
@@ -17,7 +18,8 @@ import { BadgeComponent } from './components/badge/badge.component';
     FormsModule,
     DashboardRoutingModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule,
   ]
 })
 export class DashboardModule { }
