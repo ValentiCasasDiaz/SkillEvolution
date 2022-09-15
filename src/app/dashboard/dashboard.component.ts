@@ -51,6 +51,10 @@ export class DashboardComponent implements OnInit {
                 data.forEach(element => {
                   this.users.push(element.payload.doc.data());
                 });
+
+                this.users.sort((a: User, b: User) => {
+                  return (a.displayName < b.displayName ? -1 : 1);
+                });
               }
             }
           );
