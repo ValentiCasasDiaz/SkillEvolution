@@ -1,0 +1,34 @@
+<div class="background">
+  <div *ngIf="canEdit()">
+    <span>Hay {{ this.users.length }} usuarios</span>
+
+    <br>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Seleccionar usuario:</mat-label>
+      <mat-select
+        [(value)]="selectedUser"
+        (selectionChange)="onUserChange($event.value)"
+      >
+        <mat-option [value]="option" *ngFor="let option of users">{{
+          option.displayName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <h1 *ngIf="(canEdit() && selectedUser) || (!canEdit() && this.user)">
+    Árbol de habilidades
+  </h1>
+
+  <div class="badge-container">
+    <app-badge
+      class="badge"
+      *ngFor="let badge of hardSkillBadges"
+      [badge]="badge"
+      [canEdit]="this.auth.canEdit(this.user)"
+      (onBadgeUpdate)="updateBadge($event)"
+    >
+    </app-badge>
+  </div>
+</div>

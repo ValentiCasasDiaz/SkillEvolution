@@ -4,15 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { BadgesPageComponent } from './pages/badges-page/badges-page.component';
+import { BadgeComponent } from './components/badge/badge.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { BadgeComponent } from './components/badge/badge.component';
+
 
 @NgModule({
-  declarations: [DashboardComponent, BadgeComponent],
+  declarations: [DashboardComponent, BadgeComponent, BadgesPageComponent],
   imports: [
     CommonModule,
     FormsModule,
