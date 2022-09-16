@@ -1,25 +1,36 @@
 <mat-toolbar color="primary">
-    <span class="welcome-user">Hola {{ user ? user.displayName : "" }}</span>
+  <span class="welcome-user">Hola {{ user ? user.displayName : "" }}</span>
 
-    <img mat-button [matMenuTriggerFor]="beforeMenu" class="user_photo" [src]="getUserPhoto()" alt="Photo" />
-    <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button mat-menu-item (click)="logout()">Log out</button>
-    </mat-menu>
-
+  <img
+    mat-button
+    [matMenuTriggerFor]="beforeMenu"
+    class="user_photo"
+    [src]="getUserPhoto()"
+    alt="Photo"
+  />
+  <mat-menu #beforeMenu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="logout()">Log out</button>
+  </mat-menu>
 </mat-toolbar>
 
 <div class="background">
-  <mat-form-field *ngIf="canEdit()" appearance="fill">
-    <mat-label>Usuario:</mat-label>
-    <mat-select
-      [(value)]="selectedUser"
-      (selectionChange)="onUserChange($event.value)"
-    >
-      <mat-option [value]="option" *ngFor="let option of users">{{
-        option.displayName
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div *ngIf="canEdit()">
+    <span>Hay {{ this.users.length }} usuarios</span>
+
+    <br>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Seleccionar usuario:</mat-label>
+      <mat-select
+        [(value)]="selectedUser"
+        (selectionChange)="onUserChange($event.value)"
+      >
+        <mat-option [value]="option" *ngFor="let option of users">{{
+          option.displayName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <h1 *ngIf="(canEdit() && selectedUser) || (!canEdit() && this.user)">
     Árbol de habilidades

@@ -49,7 +49,12 @@ export class DashboardComponent implements OnInit {
                 this.users = [];
 
                 data.forEach(element => {
-                  this.users.push(element.payload.doc.data());
+                  const userData: User = element.payload.doc.data();
+
+                  // Filtrem per veure només els alumnes. Ni administrador ni professors es veuran.
+                  if (userData.role == 0) {
+                    this.users.push(userData);
+                  }
                 });
 
                 this.users.sort((a: User, b: User) => {
