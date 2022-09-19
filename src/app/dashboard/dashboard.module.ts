@@ -8,9 +8,12 @@ import { BadgesPageComponent } from './pages/badges-page/badges-page.component';
 import { BadgeComponent } from './components/badge/badge.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -20,10 +23,14 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     FormsModule,
     DashboardRoutingModule,
+
     MatToolbarModule,
-    MatSelectModule,
     MatMenuModule,
-    MatCardModule
+
+    MatCardModule,
+    MatButtonModule,
+
+    MatSelectModule,
   ]
 })
 export class DashboardModule { }

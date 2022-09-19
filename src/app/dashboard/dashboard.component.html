@@ -13,22 +13,49 @@
   </mat-menu>
 </mat-toolbar>
 
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
+<div class="cards">
+  <div class="card card-1">
+    <h1 class="card__title">Insignias</h1>
+    <img class="card__image" src="assets/images/dashboard_icons/badge.png" />
+  </div>
+
+  <div *ngIf="canEdit()" class="card card-2">
+    <h2 class="card__title">Usuarios</h2>
+    <img class="card__image" src="assets/images/dashboard_icons/user.png" />
+  </div>
+
+<!--
+  <div class="card card-3">
+    <div class="card__icon"><i class="fas fa-bolt"></i></div>
+    <p class="card__exit"><i class="fas fa-times"></i></p>
+    <h2 class="card__title">Ut enim ad minim veniam.</h2>
+    <p class="card__apply">
+      <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
     </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+  </div>
+  <div class="card card-4">
+    <div class="card__icon"><i class="fas fa-bolt"></i></div>
+    <p class="card__exit"><i class="fas fa-times"></i></p>
+    <h2 class="card__title">Quis nostrud exercitation ullamco laboris nisi.</h2>
+    <p class="card__apply">
+      <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+    </p>
+  </div>
+  <div class="card card-5">
+    <div class="card__icon"><i class="fas fa-bolt"></i></div>
+    <p class="card__exit"><i class="fas fa-times"></i></p>
+    <h2 class="card__title">Ut aliquip ex ea commodo consequat. Duis aute irure dolor.</h2>
+    <p class="card__apply">
+      <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+    </p>
+  </div>
+  <div class="card card-1">
+    <div class="card__icon"><i class="fas fa-bolt"></i></div>
+    <p class="card__exit"><i class="fas fa-times"></i></p>
+    <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+    <p class="card__apply">
+      <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+    </p>
+  </div>
+-->
+</div>

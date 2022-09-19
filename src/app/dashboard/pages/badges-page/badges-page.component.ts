@@ -92,32 +92,6 @@ export class BadgesPageComponent implements OnInit {
     );
   }
 
-  getUserPhoto(): string {
-    if (this.user && this.user.photoURL) {
-      return this.user.photoURL;
-    }
-    else {
-      return "";
-    }
-  }
-
-  logout(): void {
-    if (this.allUsersSub) {
-      this.allUsersSub.unsubscribe();
-    }
-
-    if (this.badgeSub) {
-      this.badgeSub.unsubscribe();
-    }
-
-    this.userSub.unsubscribe();
-
-    this.auth
-      .logout()
-      .then(() => this.router.navigate(['/']))
-      .catch((e) => console.log(e.message));
-  }
-
   updateBadge(value: Badge): void {
     const foundIndex = this.hardSkillBadges.findIndex(x => x.id == value.id);
     this.hardSkillBadges[foundIndex] = value;
