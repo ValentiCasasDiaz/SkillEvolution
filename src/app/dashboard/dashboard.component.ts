@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
 
     this.auth
       .logout()
-      .then(() => this.router.navigate(['/']))
+      .then(() => this.router.navigate(['/login']))
       .catch((e) => console.log(e.message));
   }
 

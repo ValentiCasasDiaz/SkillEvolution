@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-page',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -16,6 +19,10 @@ export class MenuPageComponent implements OnInit {
     //TODO
 
     return true;
+  }
+
+  goToUrl(url: string) {
+    this.router.navigateByUrl(url);
   }
 
 }
