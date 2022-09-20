@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
       return this.user.photoURL;
     }
     else {
-      return "";
+      return "assets/images/profile-user.png";
     }
   }
 
