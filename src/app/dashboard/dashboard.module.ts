@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MenuPageComponent } from './pages/menu-page/menu-page.component';
@@ -31,6 +32,7 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
 
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
 
     MatSelectModule,
   ]

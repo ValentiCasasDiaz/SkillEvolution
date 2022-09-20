@@ -9,7 +9,8 @@
     alt="Photo"
   />
   <mat-menu #beforeMenu="matMenu" xPosition="before">
-    <button mat-menu-item (click)="logout()">Log out</button>
+    <button mat-menu-item (click)="goToDashboard()"><mat-icon>grid_view</mat-icon>Dashboard</button>
+    <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Log out</button>
   </mat-menu>
 </mat-toolbar>
 

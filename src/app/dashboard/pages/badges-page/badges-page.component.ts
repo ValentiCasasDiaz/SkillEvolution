@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { BadgeService } from '../../../services/badge.service';
 
@@ -13,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './badges-page.component.html',
   styleUrls: ['./badges-page.component.css']
 })
-export class BadgesPageComponent implements OnInit {
+export class BadgesPageComponent implements OnInit, OnDestroy {
 
   hardSkillBadges: Badge[] = [];
   user: User;
@@ -28,8 +27,7 @@ export class BadgesPageComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private badgeService: BadgeService,
-    private router: Router) {}
+    private badgeService: BadgeService) { }
 
   ngOnInit(): void {
     // Pedimos el usuario al servicio de autentificación
@@ -74,8 +72,14 @@ export class BadgesPageComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
-    this.badgeSub.unsubscribe();
-    this.allUsersSub.unsubscribe();
+
+    if (this.allUsersSub) {
+      this.allUsersSub.unsubscribe();
+    }
+
+    if (this.badgeSub) {
+      this.badgeSub.unsubscribe();
+    }
   }
 
   getUserBadges(user: User): void {
@@ -104,7 +108,7 @@ export class BadgesPageComponent implements OnInit {
 
     const skills = this.badgeService.convertArrayToJSArray(BADGES_HARD_SKILLS, this.hardSkillBadges);
 
-    if (this.canEdit() && this.selectedUser){
+    if (this.canEdit() && this.selectedUser) {
       this.badgeService.createUpdateBadges(this.selectedUser.uid, skills);
     }
   }

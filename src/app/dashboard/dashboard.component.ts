@@ -56,6 +56,10 @@ export class DashboardComponent implements OnInit {
       .catch((e) => console.log(e.message));
   }
 
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
   canEdit(): boolean {
     if (this.user) {
       return this.auth.canEdit(this.user);
