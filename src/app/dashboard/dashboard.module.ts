@@ -14,11 +14,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 import { MatSelectModule } from '@angular/material/select';
+import { MenuPageComponent } from './pages/menu-page/menu-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 
 
 
 @NgModule({
-  declarations: [DashboardComponent, BadgeComponent, BadgesPageComponent],
+  declarations: [DashboardComponent, BadgeComponent, BadgesPageComponent, MenuPageComponent, UsersPageComponent],
   imports: [
     CommonModule,
     FormsModule,

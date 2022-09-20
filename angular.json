@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "SkillEvolution"
+  "defaultProject": "SkillEvolution",
+  "cli": {
+    "analytics": "fa296abb-2feb-402d-a424-241b4c08dd52"
+  }
 }
