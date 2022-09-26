@@ -4,7 +4,7 @@
     <img class="card__image" src="assets/images/dashboard_icons/badge.png" />
   </div>
 
-  <div *ngIf="canEdit" class="card card-2">
+  <div *ngIf="canEdit" class="card card-2" (click)="goToUrl('/dashboard/users')">
     <h2 class="card__title">Usuarios</h2>
     <img class="card__image" src="assets/images/dashboard_icons/user.png" />
   </div>

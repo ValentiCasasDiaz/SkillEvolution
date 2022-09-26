@@ -1,1 +1,6 @@
-<p>users-page works!</p>
+<div class="cards">
+  <div *ngFor="let user of users" class="card card-1">
+    <h1 class="card__title">{{user.displayName}}</h1>
+    <img class="card__image" [src]="getImage(user.photoURL)" />
+  </div>
+</div>
