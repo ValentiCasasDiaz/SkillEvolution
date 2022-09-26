@@ -62,8 +62,9 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.filteredUsers = this.users.filter((value: User) => {
       const filterValue: string = (event.target.value).toLowerCase();
       const name = value.displayName.toLowerCase();
+      const email = value.email.toLowerCase();
 
-      return name.includes(filterValue);
+      return (name.includes(filterValue) || email.includes(filterValue));
     });
 
   }

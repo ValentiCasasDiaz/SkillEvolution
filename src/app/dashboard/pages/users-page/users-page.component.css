@@ -29,13 +29,17 @@
 .card__title {
   grid-row: 1/2;
   font-weight: 600;
-  font-size: 1.5em;
   color: #000000;
+}
+
+.card__email {
+  width: 60px;
+  grid-row: 2/3;
 }
 
 .card__image {
   width: 60px;
-  grid-row: 2/3;
+  grid-row: 3/4;
   margin-left: auto;
   display: block;
   align-self: end;

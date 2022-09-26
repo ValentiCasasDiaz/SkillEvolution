@@ -1,12 +1,13 @@
 <mat-form-field appearance="outline" class="search-bar">
-  <mat-label>Cerca usuari</mat-label>
+  <mat-label>Cerca usuari per nom o email</mat-label>
   <input matInput placeholder="Nom d'usuari..." (input)="filterUsers($event)">
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
 <div *ngIf="this.users.length > 0" class="cards">
   <div *ngFor="let user of filteredUsers" class="card card-1">
-    <h1 class="card__title">{{user.displayName}}</h1>
+    <h2 class="card__title">{{user.displayName}}</h2>
+    <p class="card__email">{{user.email}}</p>
     <img class="card__image" [src]="getImage(user.photoURL)" />
   </div>
 </div>
