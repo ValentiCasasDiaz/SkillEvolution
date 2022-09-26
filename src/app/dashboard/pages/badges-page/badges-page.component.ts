@@ -50,7 +50,10 @@ export class BadgesPageComponent implements OnInit, OnDestroy {
                   const userData: User = element.payload.doc.data();
 
                   // Filtrem per veure només els alumnes. Ni administrador ni professors es veuran.
-                  if (userData.role == 0) {
+                  // Filtramos los usuarios por el correo de alumnos
+                  const filterValue: string = "@alumnes.ilernalleida.com"
+
+                  if (userData.email.includes(filterValue)) {
                     this.users.push(userData);
                   }
                 });
