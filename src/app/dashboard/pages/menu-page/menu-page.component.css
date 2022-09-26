@@ -23,27 +23,6 @@
   transform: scale(1.02);
 }
 
-.card__link {
-  position: relative;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.9);
-}
-
-.card__link::after {
-  position: absolute;
-  top: 25px;
-  left: 0;
-  content: "";
-  width: 0%;
-  height: 3px;
-  background-color: rgba(255, 255, 255, 0.6);
-  transition: all 0.5s;
-}
-
-.card__link:hover::after {
-  width: 100%;
-}
-
 .card__title {
   grid-row: 1/2;
   font-weight: 600;
@@ -56,11 +35,6 @@
   grid-row: 2 / 3;
   margin-left: auto;
   display: block;
-}
-
-.card__apply {
-  grid-row: 3/4;
-  align-self: flex-end;
 }
 
 /* CARD BACKGROUNDS */
