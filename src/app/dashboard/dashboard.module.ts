@@ -9,12 +9,13 @@ import { BadgeComponent } from './components/badge/badge.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 import { MenuPageComponent } from './pages/menu-page/menu-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 
@@ -35,6 +36,8 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
     MatIconModule,
 
     MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
   ]
 })
 export class DashboardModule { }

@@ -1,3 +1,9 @@
+.search-bar {
+  display: flex;
+  justify-content: end;
+  margin: 20px 20px 0px 20px;
+}
+
 /* CARDS */
 .cards {
   display: flex;

@@ -1,5 +1,11 @@
-<div class="cards">
-  <div *ngFor="let user of users" class="card card-1">
+<mat-form-field appearance="outline" class="search-bar">
+  <mat-label>Cerca usuari</mat-label>
+  <input matInput placeholder="Nom d'usuari..." (input)="filterUsers($event)">
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+<div *ngIf="this.users.length > 0" class="cards">
+  <div *ngFor="let user of filteredUsers" class="card card-1">
     <h1 class="card__title">{{user.displayName}}</h1>
     <img class="card__image" [src]="getImage(user.photoURL)" />
   </div>

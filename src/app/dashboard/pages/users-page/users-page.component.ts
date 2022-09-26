@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { Subscription } from 'rxjs';
 
 import { User } from 'src/app/models/user.model';
@@ -13,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UsersPageComponent implements OnInit, OnDestroy {
 
   users: User[] = [];
+  filteredUsers: User[] = [];
 
   allUsersSub: Subscription = null;
 
@@ -39,6 +42,8 @@ export class UsersPageComponent implements OnInit, OnDestroy {
           this.users.sort((a: User, b: User) => {
             return (a.displayName < b.displayName ? -1 : 1);
           });
+
+          this.filteredUsers = this.users;
         }
       }
     );
@@ -50,6 +55,17 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   getImage(url: string): string {
     return "assets/images/profile-user.png";
+  }
+
+  filterUsers(event): void {
+
+    this.filteredUsers = this.users.filter((value: User) => {
+      const filterValue: string = (event.target.value).toLowerCase();
+      const name = value.displayName.toLowerCase();
+
+      return name.includes(filterValue);
+    });
+
   }
 
 }
