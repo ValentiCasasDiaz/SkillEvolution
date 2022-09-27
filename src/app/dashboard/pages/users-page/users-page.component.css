@@ -5,7 +5,7 @@
 }
 
 /* CARDS */
-.cards {
+.cards-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -33,9 +33,10 @@
 }
 
 .card__email {
-  width: 60px;
   grid-row: 2/3;
 }
+
+/*TODO: Hacer que se desplegue hacia abajo los botones de eliminar y editar*/
 
 .card__image {
   width: 60px;

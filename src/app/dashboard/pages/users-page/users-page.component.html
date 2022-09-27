@@ -4,10 +4,10 @@
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
-<div *ngIf="this.users.length > 0" class="cards">
+<div *ngIf="this.users.length > 0" class="cards-list">
   <div *ngFor="let user of filteredUsers" class="card card-1">
-    <h2 class="card__title">{{user.displayName}}</h2>
-    <p class="card__email">{{user.email}}</p>
+    <span class="card__title">{{user.displayName}}</span>
+    <span class="card__email">{{user.email}}</span>
     <img class="card__image" [src]="getImage(user.photoURL)" />
   </div>
 </div>
