@@ -69,4 +69,12 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   }
 
+  editUser(user: User): void {
+    console.log("Edit: " + user);
+  }
+
+  deleteUser(user: User): void {
+    console.log("Delete: " + user);
+  }
+
 }

@@ -1,13 +1,21 @@
 <mat-form-field appearance="outline" class="search-bar">
   <mat-label>Cerca usuari per nom o email</mat-label>
-  <input matInput placeholder="Nom d'usuari..." (input)="filterUsers($event)">
+  <input matInput placeholder="Nom d'usuari..." (input)="filterUsers($event)" />
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
 <div *ngIf="this.users.length > 0" class="cards-list">
   <div *ngFor="let user of filteredUsers" class="card card-1">
-    <span class="card__title">{{user.displayName}}</span>
-    <span class="card__email">{{user.email}}</span>
+    <span class="card__title">{{ user.displayName }}</span>
+    <span class="card__email">{{ user.email }}</span>
     <img class="card__image" [src]="getImage(user.photoURL)" />
+    <span class="card__options">
+      <button mat-icon-button color="primary" (click)="editUser(user)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteUser(user)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
   </div>
 </div>
