@@ -63,6 +63,7 @@ export class AuthService {
       );
   }
 
+  // Log in With Google
   loginWithGoogle() {
     var provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
@@ -79,7 +80,15 @@ export class AuthService {
     return this.auth.signOut();
   }
 
-  private updateUserData(user) {
+  // READ
+
+  // Devuelve los usuarios y cualquier cambio que en ellas que pase
+  getUsers() {
+    return this.db.collection(CONSTS.STORAGE_USERS).snapshotChanges();
+  }
+
+  // UPDATE
+  private updateUserData(user): void {
 
     const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
 
@@ -101,6 +110,19 @@ export class AuthService {
     );
   }
 
+  // DELETE
+  deleteUser(user: User) {
+    this.db.doc(`users/${user.uid}`)
+  }
+
+
+
+  // AUTH
+  canEdit(user: User): boolean {
+    const allowed = [Role.ROLE_ADMIN, Role.ROLE_TEACHER];
+    return this.checkAuthorization(user, allowed);
+  }
+
   private checkAuthorization(user: User, roles: Role[]): boolean {
     let isAuthorized: boolean = false;
 
@@ -117,16 +139,6 @@ export class AuthService {
     }
 
     return isAuthorized;
-  }
-
-  canEdit(user: User): boolean {
-    const allowed = [Role.ROLE_ADMIN, Role.ROLE_TEACHER];
-    return this.checkAuthorization(user, allowed);
-  }
-
-  // Devuelve los usuarios y cualquier cambio que en ellas que pase
-  getUsers() {
-    return this.db.collection(CONSTS.STORAGE_USERS).snapshotChanges();
   }
 
 }
