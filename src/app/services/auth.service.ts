@@ -102,7 +102,8 @@ export class AuthService {
           displayName: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
-          role: (infoUser) ? infoUser.role : Role.ROLE_USER
+          role: (infoUser) ? infoUser.role : Role.ROLE_USER,
+          course: (user.course) ? user.course : 'Sense curs'
         };
 
         userRef.set(data, { merge: true });

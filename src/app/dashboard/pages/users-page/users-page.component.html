@@ -6,7 +6,10 @@
 
 <div *ngIf="this.users.length > 0" class="cards-list">
   <div *ngFor="let user of filteredUsers" class="card card-1">
-    <span class="card__title">{{ user.displayName }}</span>
+    <span class="card__title">
+      {{ user.displayName }}
+      <span *ngIf="user.course">({{ user.course }})</span>
+    </span>
     <span class="card__email">{{ user.email }}</span>
     <img class="card__image" [src]="getImage(user.photoURL)" />
     <span class="card__options">

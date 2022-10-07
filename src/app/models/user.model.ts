@@ -10,4 +10,5 @@ export interface User {
     email: string;
     photoURL?: string;
     role?: Role.ROLE_USER;
+    course?: string;
 }
