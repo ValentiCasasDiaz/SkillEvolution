@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 
 import { User } from 'src/app/models/user.model';
 
 import { AuthService } from 'src/app/services/auth.service';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users-page',
@@ -75,6 +76,19 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   deleteUser(user: User): void {
     console.log("Delete: " + user);
+    Swal.fire({
+      title: 'Esteu segurs?',
+      text: `Eliminar l'usuari ${user.displayName}...`,
+      showCancelButton: true,
+      confirmButtonText: 'Elimina',
+      confirmButtonColor: '#F44336',
+      cancelButtonText: `Cancela`,
+      cancelButtonColor: '#3F51B5',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.auth.deleteUser(user).then(() => Swal.fire('Usuari eliminat!', '', 'success'));
+      }
+    })
   }
 
 }

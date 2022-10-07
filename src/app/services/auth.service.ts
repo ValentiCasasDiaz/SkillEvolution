@@ -111,8 +111,9 @@ export class AuthService {
   }
 
   // DELETE
-  deleteUser(user: User) {
-    this.db.doc(`users/${user.uid}`)
+  deleteUser(user: User): Promise<void> {
+    this.db.doc(`badges/${user.uid}`).delete();
+    return this.db.doc(`users/${user.uid}`).delete();
   }
 
 
