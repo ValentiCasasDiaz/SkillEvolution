@@ -55,7 +55,11 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   }
 
   getImage(url: string): string {
-    return "assets/images/profile-user.png";
+    if (url.length > 0) {
+      return url;
+    } else {
+      return "assets/images/profile-user.png";
+    }
   }
 
   filterUsers(event): void {
