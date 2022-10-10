@@ -4,6 +4,7 @@ export enum Role {
   ROLE_ADMIN
 }
 
+// TODO: Eliminar opcional los parámetros "photoURL", "role" i "course"
 export interface User {
     uid: string;
     displayName: string;
